@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    # Note: In this configuration, the database is stored inside the container.
+    # Data will persist across container restarts, but will be lost if the container
+    # is removed or if the image is rebuilt.
+    env_file:
+      - ./.env
+    restart: unless-stopped

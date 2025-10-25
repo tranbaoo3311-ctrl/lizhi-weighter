@@ -2,10 +2,11 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.pool import StaticPool
+import os
 
-# Use an in-memory SQLite database
-# Using StaticPool is necessary to ensure the same in-memory database is used across all threads.
-SQLALCHEMY_DATABASE_URL = "sqlite:///:memory:"
+# The database will be stored inside the container's app directory
+DB_PATH = "/app/sql_app.db"
+SQLALCHEMY_DATABASE_URL = f"sqlite:///{DB_PATH}"
 
 engine = create_engine(
     SQLALCHEMY_DATABASE_URL,
