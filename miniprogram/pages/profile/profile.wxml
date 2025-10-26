@@ -1,0 +1,4 @@
+<!--pages/profile/profile.wxml-->
+<view>
+  <text>This is the user profile page.</text>
+</view>

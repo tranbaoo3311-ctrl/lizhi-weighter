@@ -1,0 +1,22 @@
+<!--pages/product_detail/product_detail.wxml-->
+<view class="page-container">
+  <view wx:if="{{isLoading}}" class="loading-container">
+    <text>加载中...</text>
+  </view>
+
+  <view wx:elif="{{product}}">
+    <view class="product-name">{{product.name}}</view>
+    <view class="product-price">¥{{product.retail_price}} / {{product.unit}}</view>
+
+    <!-- Add more details as needed -->
+    <view class="product-description">
+      这是一个商品的详细描述。更多信息可以在后台管理系统中进行配置。
+    </view>
+
+    <button class="add-to-cart-btn" bindtap="addToCart">加入购物车</button>
+  </view>
+
+  <view wx:else class="error-container">
+    <text>商品信息加载失败。</text>
+  </view>
+</view>

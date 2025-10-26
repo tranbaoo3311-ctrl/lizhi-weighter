@@ -98,6 +98,25 @@ def create_order(order: schemas.OrderCreate, db: Session = Depends(get_db)):
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
 
+@app.get("/orders/", response_model=List[schemas.Order])
+def read_orders(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    orders = crud.get_orders(db, skip=skip, limit=limit)
+    return orders
+
+@app.get("/orders/{order_id}", response_model=schemas.Order)
+def read_order(order_id: int, db: Session = Depends(get_db)):
+    db_order = crud.get_order(db, order_id=order_id)
+    if db_order is None:
+        raise HTTPException(status_code=404, detail="Order not found")
+    return db_order
+
+@app.put("/orders/{order_id}/status", response_model=schemas.Order)
+def update_order_status(order_id: int, status: schemas.OrderStatusUpdate, db: Session = Depends(get_db)):
+    db_order = crud.update_order_status(db, order_id=order_id, status=status)
+    if db_order is None:
+        raise HTTPException(status_code=404, detail="Order not found")
+    return db_order
+
 # Price Rules
 @app.post("/pricerules/", response_model=schemas.PriceRule)
 def create_price_rule(price_rule: schemas.PriceRuleCreate, db: Session = Depends(get_db)):

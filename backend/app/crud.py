@@ -107,3 +107,17 @@ def create_price_rule(db: Session, price_rule: schemas.PriceRuleCreate):
     db.commit()
     db.refresh(db_price_rule)
     return db_price_rule
+
+def get_order(db: Session, order_id: int):
+    return db.query(models.Order).filter(models.Order.id == order_id).first()
+
+def get_orders(db: Session, skip: int = 0, limit: int = 100):
+    return db.query(models.Order).offset(skip).limit(limit).all()
+
+def update_order_status(db: Session, order_id: int, status: schemas.OrderStatusUpdate):
+    db_order = get_order(db, order_id=order_id)
+    if db_order:
+        db_order.status = status.status
+        db.commit()
+        db.refresh(db_order)
+    return db_order
