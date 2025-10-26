@@ -18,8 +18,12 @@ RUN apt-get update && \
 # Copy the rest of the application's code into the container at /app
 COPY . /app
 
-# Ensure the app directory is writable by any user, as we don't know what user the container will run as.
-RUN chmod -R 777 /app
+# Create a non-root user and change ownership of the app directory
+RUN addgroup --system appgroup && adduser --system --ingroup appgroup appuser
+RUN chown -R appuser:appgroup /app
+
+# Switch to the non-root user
+USER appuser
 
 # Expose port 8000 to the outside world
 EXPOSE 8000

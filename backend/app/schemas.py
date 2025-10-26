@@ -73,6 +73,9 @@ class Order(OrderBase):
     class Config:
         orm_mode = True
 
+class OrderStatusUpdate(BaseModel):
+    status: OrderStatus
+
 # Schemas for PriceRule
 class PriceRuleBase(BaseModel):
     product_id: int

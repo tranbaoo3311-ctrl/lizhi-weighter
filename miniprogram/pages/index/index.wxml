@@ -1,0 +1,19 @@
+<!--pages/index/index.wxml-->
+<view class="page-container">
+  <view wx:if="{{isLoading}}" class="loading-container">
+    <text>加载中...</text>
+  </view>
+
+  <view wx:else class="product-list">
+    <view
+      class="product-card"
+      wx:for="{{productList}}"
+      wx:key="id"
+      data-id="{{item.id}}"
+      bindtap="navigateToDetail"
+    >
+      <view class="product-name">{{item.name}}</view>
+      <view class="product-price">¥{{item.retail_price}} / {{item.unit}}</view>
+    </view>
+  </view>
+</view>
